@@ -5,7 +5,7 @@ import (
 	"fmt"
 
 	"github.com/go-redis/redis"
-	"github.com/s8sg/goflow/core/sdk"
+	"github.com/horsing/goflow/core/sdk"
 )
 
 type RedisStateStore struct {

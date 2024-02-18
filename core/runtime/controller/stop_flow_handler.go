@@ -2,8 +2,8 @@ package controller
 
 import (
 	"fmt"
-	"github.com/s8sg/goflow/core/runtime"
-	"github.com/s8sg/goflow/core/sdk/executor"
+	"github.com/horsing/goflow/core/runtime"
+	"github.com/horsing/goflow/core/sdk/executor"
 	"log"
 )
 

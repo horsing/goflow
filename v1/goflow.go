@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	runtimePkg "github.com/s8sg/goflow/core/runtime"
-	"github.com/s8sg/goflow/core/sdk"
-	"github.com/s8sg/goflow/runtime"
+	runtimePkg "github.com/horsing/goflow/core/runtime"
+	"github.com/horsing/goflow/core/sdk"
+	"github.com/horsing/goflow/runtime"
 )
 
 type FlowService struct {

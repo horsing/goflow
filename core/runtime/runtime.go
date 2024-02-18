@@ -1,7 +1,7 @@
 package runtime
 
 import (
-	"github.com/s8sg/goflow/core/sdk/executor"
+	"github.com/horsing/goflow/core/sdk/executor"
 )
 
 type Runtime interface {

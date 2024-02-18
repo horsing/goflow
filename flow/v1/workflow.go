@@ -2,8 +2,9 @@ package v1
 
 import (
 	"fmt"
-	"github.com/s8sg/goflow/core/sdk"
-	"github.com/s8sg/goflow/operation"
+
+	"github.com/horsing/goflow/core/sdk"
+	"github.com/horsing/goflow/operation"
 )
 
 type Context sdk.Context
@@ -264,4 +265,13 @@ func createWorkload(id string, mod operation.Modifier) *operation.GoFlowOperatio
 	operation.Id = id
 	operation.Options = make(map[string][]string)
 	return operation
+}
+
+// Node functions
+type Customizer func(*sdk.Node)
+
+func (node *Node) Custom(customizers ...Customizer) {
+	for _, c := range customizers {
+		c(node.unode)
+	}
 }

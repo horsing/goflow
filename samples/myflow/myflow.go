@@ -2,7 +2,7 @@ package myflow
 
 import (
 	"fmt"
-	flow "github.com/s8sg/goflow/flow/v1"
+	flow "github.com/horsing/goflow/flow/v1"
 )
 
 // Workload function

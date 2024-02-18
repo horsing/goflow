@@ -1,8 +1,8 @@
-# Go-Flow  &nbsp; [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Start%20writing%20your%20distributed%20workflow%20in%20Golang%20with%20GoFlow&url=https://github.com/s8sg/goflow&hashtags=golang,workflow,distributedcomputing,framework)
+# Go-Flow  &nbsp; [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Start%20writing%20your%20distributed%20workflow%20in%20Golang%20with%20GoFlow&url=https://github.com/horsing/goflow&hashtags=golang,workflow,distributedcomputing,framework)
 
-[![GoDoc](https://godoc.org/github.com/s8sg/goflow?status.svg)](https://godoc.org/github.com/s8sg/goflow)
-![Build](https://github.com/s8sg/goflow/workflows/GO-Flow-Build/badge.svg) 
-[![Go Report Card](https://goreportcard.com/badge/github.com/s8sg/goflow)](https://goreportcard.com/report/github.com/s8sg/goflow)
+[![GoDoc](https://godoc.org/github.com/horsing/goflow?status.svg)](https://godoc.org/github.com/horsing/goflow)
+![Build](https://github.com/horsing/goflow/workflows/GO-Flow-Build/badge.svg)
+[![Go Report Card](https://goreportcard.com/badge/github.com/horsing/goflow)](https://goreportcard.com/report/github.com/horsing/goflow)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](https://opensource.org/licenses/MIT)
 
 
@@ -10,8 +10,8 @@
 
 A Golang based high performance, scalable and distributed workflow framework
 
-It allows to programmatically author distributed workflow as Directed Acyclic Graph (DAG) of tasks. 
-GoFlow executes your tasks on an array of workers by uniformly distributing the loads 
+It allows to programmatically author distributed workflow as Directed Acyclic Graph (DAG) of tasks.
+GoFlow executes your tasks on an array of workers by uniformly distributing the loads
 
 ## Stability and Compatibility
 
@@ -20,15 +20,15 @@ GoFlow executes your tasks on an array of workers by uniformly distributing the 
 > ☝️ **Important Note**: Current major version is zero (`v0.x.x`) to accommodate rapid development and fast iteration. The public API could change without a major version update before `v1.0.0` release.
 
 
-## Install It 
+## Install It
 Install GoFlow
 ```sh
 go mod init myflow
-go get github.com/s8sg/goflow@master
+go get github.com/horsing/goflow@master
 ```
 
 ## Write First Flow
-> Library to Build Flow `github.com/s8sg/goflow/flow/v1`
+> Library to Build Flow `github.com/horsing/goflow/flow/v1`
 
 [![GoDoc](https://godoc.org/github.com/faasflow/goflow/flow?status.svg)](https://godoc.org/github.com/faasflow/goflow/flow)
 
@@ -38,8 +38,8 @@ package main
 
 import (
 	"fmt"
-	goflow "github.com/s8sg/goflow/v1"
-	flow "github.com/s8sg/goflow/flow/v1"
+	goflow "github.com/horsing/goflow/v1"
+	flow "github.com/horsing/goflow/flow/v1"
 )
 
 // Workload function
@@ -68,12 +68,12 @@ func main() {
 ```
 > `Start()` runs a HTTP Server that listen on the provided Port. It also runs a flow worker that handles the workload
 
-## Run It 
+## Run It
 Start goflow stack
 ```sh
 docker-compose up
 ```
-This will start the required services 
+This will start the required services
 * redis
 * jaeger
 * dashboard
@@ -94,7 +94,7 @@ curl -d hallo localhost:8080/flow/myflow
 
 ### Using Client
 
-Using the goflow client you can request the flow directly. 
+Using the goflow client you can request the flow directly.
 The requests are always async and gets queued for the workers to pick up
 ```go
 fs := &goflow.FlowService{
@@ -114,7 +114,7 @@ GoFlow scale horizontally, you can distribute the load by just adding more insta
 
 #### Worker Mode
 Alternatively you can start your GoFlow in worker mode. As a worker, GoFlow only handles the workload instead
-of running an HTTP server. If required you can only scale the workers 
+of running an HTTP server. If required you can only scale the workers
 ```go
 fs := &goflow.FlowService{
     RedisURL:            "localhost:6379",
@@ -126,12 +126,12 @@ fs.StartWorker()
 ```
 
 #### Register Multiple Flow
-`Register()` allows user to bind multiple flows onto single flow service. 
+`Register()` allows user to bind multiple flows onto single flow service.
 This way one instance of server/worker can be used for more than one flows
 ```go
 fs.Register("createUser", DefineCreateUserFlow)
 fs.Register("deleteUser", DefineDeleteUserFlow)
-```` 
+````
 <br />
 
 ## Creating More Complex DAG
@@ -148,7 +148,7 @@ A multi-vertex flow is always asynchronous in nature where each nodes gets
 distributed across the workers
 
 Below is an example of a simple multi vertex flow to validate a KYC image of a user and mark the user according to the result.
-This is a asynchronous flow with three steps 
+This is a asynchronous flow with three steps
 ![Async Flow](doc/goflow-sequential.png)
 ```go
 func DefineWorkflow(f *flow.Workflow, context *flow.Context) error {
@@ -168,7 +168,7 @@ Branching are great for parallelizing independent workloads in separate branches
 
 Branching can be achieved with simple vertex and edges. GoFlow provides a special operator [Aggregator](https://godoc.org/github.com/faasflow/lib/goflow#Aggregator) to aggregate result of multiple branch on a converging node
 
-We are extending our earlier example to include a new requirement to match the face with existing data 
+We are extending our earlier example to include a new requirement to match the face with existing data
 and we are performing the operation in parallel to reduce time
 ![Branching](doc/goflow-branching.png)
 
@@ -178,7 +178,7 @@ func DefineWorkflow(f *flow.Workflow, context *flow.Context) error {
     dag.Node("get-kyc-image", getPresignedURLForImage)
     dag.Node("face-detect", detectFace)
     dag.Node("face-match", matchFace)
-    // Here mark-profile depends on the result from face-detect and face-match, 
+    // Here mark-profile depends on the result from face-detect and face-match,
     // we are using a aggregator to create unified results
     dag.Node("mark-profile", markProfileBasedOnStatus, flow.Aggregator(func(responses map[string][]byte) ([]byte, error) {
        status := validateResults(responses["face-detect"],  responses["face-match"])
@@ -196,14 +196,14 @@ func DefineWorkflow(f *flow.Workflow, context *flow.Context) error {
 Subdag allows to reuse existing DAG by embedding it into DAG with wider functionality
 
 [SubDag](https://godoc.org/github.com/faasflow/lib/goflow#Dag.SubDag) is available as a GoFlow DAG construct which takes
-a separate DAG as an input and composite it within a vertex, where the vertex completion depends on the embedded DAG's 
+a separate DAG as an input and composite it within a vertex, where the vertex completion depends on the embedded DAG's
 completion
 ```go
 func (currentDag *Dag) SubDag(vertex string, dag *Dag)
 ```
 
-Say we have a separate flow that needs the same set of steps to validate a user. 
-With our earlier example we can separate out the validation process into subdag and put it 
+Say we have a separate flow that needs the same set of steps to validate a user.
+With our earlier example we can separate out the validation process into subdag and put it
 in a library that can be shared across different flows
 ![Subdag](doc/goflow-subdag.png)
 ```go
@@ -214,7 +214,7 @@ func KycImageValidationDag() *flow.Dag {
     dag.Node("face-match", matchFace)
     dag.Node("generate-result", func(data []byte, option map[string][]string) ([]byte, error) {
                  return data, nil
-            }, 
+            },
             flow.Aggregator(func(responses map[string][]byte) ([]byte, error) {
                 status := validateResults(responses["face-detect"],  responses["face-match"])
                 status = "failure"
@@ -249,7 +249,7 @@ func DefineWorkflow(f *flow.Workflow, context *flow.Context) error {
 Conditional branching is a great way to choose different execution path dynamically
 
 GoFlow provides a DAG component called [ConditionalBranch](https://godoc.org/github.com/faasflow/lib/goflow#Dag.ConditionalBranch).
-ConditionalBranch creates a vertex that composites different conditional branches as an individual subdags, each 
+ConditionalBranch creates a vertex that composites different conditional branches as an individual subdags, each
 identified with a unique key resemble the condition
 
 ```
@@ -258,7 +258,7 @@ func (currentDag *Dag) ConditionalBranch(vertex string, conditions []string, con
 ```
 
 [Condition](https://godoc.org/github.com/faasflow/sdk#Condition) is a special handler that allows user to dynamically choose one or more
-execution path based on the result from earlier node and return a set of condition Keys 
+execution path based on the result from earlier node and return a set of condition Keys
 
 User gets the condition branches as a response where each branch specific dags are mapped against the specific condition.
 User can farther define each branch using the DAG constructs
@@ -277,7 +277,7 @@ func KycImageValidationDag() *flow.Dag {
         return []string{}
     })
 
-    // On the pass branch we are performing the `face-match` . If condition `pass` 
+    // On the pass branch we are performing the `face-match` . If condition `pass`
     // is not matched execution of next node `generate-result` is continued
 
     branches["pass"].Node("face-match", matchFace)
@@ -300,7 +300,7 @@ func KycImageValidationDag() *flow.Dag {
     dag.Node("face-detect", detectFace)
     // here face match happen only when face-detect is success
     // otherwise create-user is called
-    branches = dag.ConditionalBranch("handle-face-detect-response", []string{"pass", "fail"}, 
+    branches = dag.ConditionalBranch("handle-face-detect-response", []string{"pass", "fail"},
         func(response []byte) []string {
            response := ParseFaceDetectResponse(response)
            if response.isSuccess() { return []string{"pass"}  }
@@ -310,7 +310,7 @@ func KycImageValidationDag() *flow.Dag {
     branches["pass"].Node("face-match", matchFace)
     // on the fail branch we are performing `create-user`
     branches["fail"].Node("create-user", createUser)
-  
+
     dag.Node("generate-result", generateResult)
     dag.Edge("verify-url", "face-detect")
     dag.Edge("face-detect", "handle-face-detect-response")
@@ -329,8 +329,8 @@ ForEachBranch creates a vertex composites of a subdag that defines the flow with
 func (currentDag *Dag) ForEachBranch(vertex string, foreach sdk.ForEach, options ...BranchOption) (dag *Dag)
 ```
 
-[ForEach](https://godoc.org/github.com/faasflow/sdk#ForEach) is a special handler that allows user to dynamically 
-return a set of key and values. For each of the items in the returned set, the user defined dag will get executed 
+[ForEach](https://godoc.org/github.com/faasflow/sdk#ForEach) is a special handler that allows user to dynamically
+return a set of key and values. For each of the items in the returned set, the user defined dag will get executed
 
 User gets the foreach branch as a response and can define the flow using the DAG constructs
 
@@ -358,4 +358,4 @@ func DefineWorkflow(f *flow.Workflow, context *flow.Context) error {
 ```
 
 
- 
+

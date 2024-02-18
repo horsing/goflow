@@ -2,14 +2,14 @@ package main
 
 import (
 	"fmt"
-	"github.com/s8sg/goflow/samples/condition"
-	"github.com/s8sg/goflow/samples/loop"
-	"github.com/s8sg/goflow/samples/myflow"
-	"github.com/s8sg/goflow/samples/parallel"
-	"github.com/s8sg/goflow/samples/serial"
-	"github.com/s8sg/goflow/samples/single"
+	"github.com/horsing/goflow/samples/condition"
+	"github.com/horsing/goflow/samples/loop"
+	"github.com/horsing/goflow/samples/myflow"
+	"github.com/horsing/goflow/samples/parallel"
+	"github.com/horsing/goflow/samples/serial"
+	"github.com/horsing/goflow/samples/single"
 
-	goflow "github.com/s8sg/goflow/v1"
+	goflow "github.com/horsing/goflow/v1"
 )
 
 func main() {

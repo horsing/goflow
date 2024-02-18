@@ -9,8 +9,8 @@ import (
 	"strconv"
 
 	hmac "github.com/alexellis/hmac"
+	sdk "github.com/horsing/goflow/core/sdk"
 	xid "github.com/rs/xid"
-	sdk "github.com/s8sg/goflow/core/sdk"
 )
 
 // RawRequest a raw request for the flow

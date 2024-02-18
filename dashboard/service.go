@@ -5,8 +5,8 @@ import (
 	"github.com/rs/xid"
 	"log"
 
-	lib2 "github.com/s8sg/goflow/dashboard/lib"
-	goflow3 "github.com/s8sg/goflow/v1"
+	lib2 "github.com/horsing/goflow/dashboard/lib"
+	goflow3 "github.com/horsing/goflow/v1"
 	redis "gopkg.in/redis.v5"
 	"os"
 	"strings"

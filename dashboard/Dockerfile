@@ -3,7 +3,7 @@ FROM golang:1.20 as build
 ENV http_proxy  ""
 ENV https_proxy ""
 
-WORKDIR /go/src/github.com/s8sg/goflow/dashboard
+WORKDIR /go/src/github.com/horsing/goflow/dashboard
 
 ADD . .
 

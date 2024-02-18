@@ -1,4 +1,4 @@
-module github.com/s8sg/goflow/dashboard
+module github.com/horsing/goflow/dashboard
 
 go 1.20
 
@@ -6,7 +6,7 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/rs/xid v1.2.1
 	github.com/s8sg/faas-flow v0.6.2
-	github.com/s8sg/goflow v0.1.5-0.20230622121947-e28fb2fe6482
+	github.com/horsing/goflow v0.1.5-0.20230622121947-e28fb2fe6482
 	gopkg.in/redis.v5 v5.2.9
 )
 

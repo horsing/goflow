@@ -80,6 +80,9 @@ type Node struct {
 
 	next []*Node
 	prev []*Node
+
+	// Extended features
+	TrggerMode bool // means this node is started by event not automatically
 }
 
 // NewDag Creates a Dag
@@ -109,7 +112,7 @@ func (this *Dag) Append(dag *Dag) error {
 // AddVertex create a vertex with id and operations
 func (this *Dag) AddVertex(id string, operations []Operation) *Node {
 
-	node := &Node{Id: id, operations: operations, index: this.nodeIndex + 1}
+	node := &Node{Id: id, operations: operations, index: this.nodeIndex + 1, TrggerMode: false}
 	node.forwarder = make(map[string]Forwarder, 0)
 	node.parentDag = this
 	this.nodeIndex = this.nodeIndex + 1
@@ -135,7 +138,7 @@ func (this *Dag) AddEdge(from, to string) error {
 	}
 
 	// Check if cyclic dependency (TODO: Check if one way check if enough)
-	if fromNode.inSlice(toNode.next) || toNode.inSlice(fromNode.prev) {
+	if !toNode.TrggerMode && (fromNode.inSlice(toNode.next) || toNode.inSlice(fromNode.prev)) {
 		return ERR_CYCLIC
 	}
 
